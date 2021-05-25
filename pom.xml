@@ -21,7 +21,7 @@
 		<spring.version>5.1.2.RELEASE</spring.version>
 		<junit.version>4.11</junit.version>
 		<log4j.version>1.2.17</log4j.version>
-		<sonar.host.url>http://15.207.109.28:9000/</sonar.host.url>
+		<sonar.host.url>http://15.206.185.24:9000/</sonar.host.url>
                 <sonar.login>admin</sonar.login>
 		<sonar.password>admin</sonar.password>  
               
@@ -99,13 +99,13 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>Mithun Technologies Releases Nexus Repository</name>
-	      <url>http://65.1.91.231:8081/repository/clubfactory-release/</url>
+	      <url>http://52.66.241.110:8081/repository/clubfactory-release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>Mithun Technologies Snapshot Nexus Repository </name>
-	      <url>http://65.1.91.231:8081/repository/clubfactory-snapshot/</url>
+	      <url>http://52.66.241.110:8081/repository/clubfactory-snapshot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
