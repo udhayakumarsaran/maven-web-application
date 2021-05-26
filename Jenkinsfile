@@ -1,4 +1,4 @@
-node
+node ('slave1')
 {
     def mavenHome = tool name : "maven-3.8.1"
     stage('CHeckoutCOdefromSCM')
