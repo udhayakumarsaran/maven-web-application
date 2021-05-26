@@ -1,0 +1,63 @@
+pipeline
+{
+ agent any
+ tools
+ {
+     maven 'maven-3.8.1'
+     
+ }
+ triggers
+ {
+    pollSCM(' * * * * * ')
+ }
+ options
+ {
+    timestamps()
+    buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5'))
+ }
+ 
+ stages
+ {
+     stage('checkoutcode')
+     {
+        steps{
+         git branch: 'development', credentialsId: 'git-hub', url: 'https://github.com/udhayakumarsaran/maven-web-application.git'
+       }
+     }
+     stage('buildpackageusingmaven')
+     {
+         steps
+         {
+           sh "mvn clean package"  
+         }
+      }
+      stage('sonarreport')
+      {
+          steps{
+              sh "mvn sonar:sonar"
+          }
+      }
+      stage('uploadartifactstonexus')
+      {
+          steps{
+              sh "mvn deploy"
+          }
+      }
+      stage('deployapplicationtotomcat')
+      {
+          steps{
+              sshagent(['ec2-user']) {
+    sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.5.153:/opt/apache-tomcat-9.0.46/webapps"
+          }
+      }
+      }
+ } 
+ post{
+     success{
+     emailext body: 'build completed - please check further', subject: 'Build status', to: 'devopsudhaya.kumar@gmail.com,splunkudhaya.kumar@gmail.com,udhayasaran@gmail.com'
+ }
+    failure{
+     emailext body: 'build completed - please check further', subject: 'Build status', to: 'devopsudhaya.kumar@gmail.com,splunkudhaya.kumar@gmail.com,udhayasaran@gmail.com'
+ } 
+ }
+}   
